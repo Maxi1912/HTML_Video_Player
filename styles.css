@@ -1,0 +1,12 @@
+.player {
+    width: 640px;
+}
+.progress {
+    display: flex;
+    background-color: burlywood;
+    height: 30px;
+}
+.progress__filled {
+    flex-basis: 0%;
+    background-color: #BADA55;
+}

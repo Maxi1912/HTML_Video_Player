@@ -28,13 +28,19 @@ function skip() {
 }
 
 function handleRangeUpdate() {
-  console.dir(this.value);
+  // console.log(this.value);
   video[this.name] = this.value;
 }
 
 function handleProgress() {
   const percent = (video.currentTime / video.duration) * 100;
   progressBar.style.flexBasis = `${percent}%`;
+}
+
+function scrub(e) {
+  console.log(e);
+  const scrubTime = (e.offsetX / this.offsetWidth) * video.duration;
+  video.currentTime = scrubTime;
 }
 /* Hook up the event listeners */
 video.addEventListener("click", togglePlay);
@@ -47,6 +53,17 @@ toggle.addEventListener("click", togglePlay);
 skipButtons.forEach((button) => {
   button.addEventListener("click", skip);
 });
+
 ranges.forEach((range) => {
   range.addEventListener("change", handleRangeUpdate);
+  // console.log(range.name);
 });
+ranges.forEach((range) => {
+  range.addEventListener("mousemove", handleRangeUpdate);
+});
+
+let mousedown = false;
+progress.addEventListener("click", scrub);
+progress.addEventListener("mousemove", (e) => mousedown && scrub(e));
+progress.addEventListener("mousedown", () => (mousedown = true));
+progress.addEventListener("mouseup", () => (mousedown = false));
